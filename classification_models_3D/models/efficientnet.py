@@ -27,10 +27,10 @@ from tensorflow.keras import layers, models
 import os
 import copy
 import math
+load_model_weights = weights.load_model_weights
 
-
-from ..models._DepthwiseConv3D import DepthwiseConv3D
-
+from classification_models_3D import models
+DepthwiseConv3D = models._DepthwiseConv3D.DepthwiseConv3D
 
 DEFAULT_BLOCKS_ARGS = [{
     'kernel_size': 3,
