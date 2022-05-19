@@ -21,19 +21,15 @@ Reference:
       https://arxiv.org/abs/1905.11946) (ICML 2019)
 """
 
-from .. import get_submodules_from_kwargs
 from ..weights import load_model_weights
-import tensorflow.compat.v2 as tf
-
+import tensorflow as tf
+from tensorlow import keras 
+form tensorflw.keras import layers, models
 import os
 import copy
 import math
 
-from keras.applications import imagenet_utils
-from keras.engine import training
-from keras.layers import VersionAwareLayers
-from keras.utils import data_utils
-from keras.utils import layer_utils
+
 from ..models._DepthwiseConv3D import DepthwiseConv3D
 
 
@@ -278,11 +274,8 @@ def EfficientNet(
         ValueError: in case of invalid argument for `weights`,
           or invalid input shape.
         ValueError: if `classifier_activation` is not `softmax` or `None` when
-          using a pretrained top layer.
-      """
-    global backend, layers, models, keras_utils
-    backend, layers, models, keras_utils = get_submodules_from_kwargs(kwargs)
-
+          using a pretrained top layer."""""
+  
     if blocks_args == 'default':
         blocks_args = DEFAULT_BLOCKS_ARGS
 
