@@ -20,7 +20,7 @@ Reference:
   - [EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks](
       https://arxiv.org/abs/1905.11946) (ICML 2019)
 """
-from classification_models_3D.weight import load_model_weights
+from classification_models_3D import import weights
 import tensorflow as tf
 from tensorflow import keras 
 from tensorflow.keras import layers, models
