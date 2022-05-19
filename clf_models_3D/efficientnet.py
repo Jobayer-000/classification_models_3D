@@ -20,7 +20,7 @@ Reference:
   - [EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks](
       https://arxiv.org/abs/1905.11946) (ICML 2019)
 """
-from classification_models_3D import weights
+from clf_models_3D import weights
 import tensorflow as tf
 from tensorflow import keras 
 from tensorflow.keras import layers, models
@@ -29,8 +29,8 @@ import copy
 import math
 load_model_weights = weights.load_model_weights
 
-from classification_models_3D import models
-DepthwiseConv3D = models._DepthwiseConv3D.DepthwiseConv3D
+from clf_models_3D import _DepthwiseConv3D
+DepthwiseConv3D = _DepthwiseConv3D.DepthwiseConv3D
 
 DEFAULT_BLOCKS_ARGS = [{
     'kernel_size': 3,
