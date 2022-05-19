@@ -334,7 +334,6 @@ def EfficientNet(
 
     # Build stem
     x = img_input
-    x = layers.Rescaling(1. / 255.)(x)
     x = layers.Normalization(axis=bn_axis)(x)
 
     x = layers.ZeroPadding3D(
@@ -781,29 +780,3 @@ EfficientNetB6.__doc__ = BASE_DOCSTRING.format(name='EfficientNetB6')
 EfficientNetB7.__doc__ = BASE_DOCSTRING.format(name='EfficientNetB7')
 
 
-def preprocess_input(x, data_format=None):  # pylint: disable=unused-argument
-    """A placeholder method for backward compatibility.
-
-    The preprocessing logic has been included in the efficientnet model
-    implementation. Users are no longer required to call this method to normalize
-    the input data. This method does nothing and only kept as a placeholder to
-    align the API surface between old and new version of model.
-
-    Args:
-    x: A floating point `numpy.array` or a `tf.Tensor`.
-    data_format: Optional data format of the image tensor/array. Defaults to
-      None, in which case the global setting
-      `tf.keras.backend.image_data_format()` is used (unless you changed it,
-      it defaults to "channels_last").{mode}
-
-    Returns:
-    Unchanged `numpy.array` or `tf.Tensor`.
-    """
-    return x
-
-
-def decode_predictions(preds, top=5):
-    return imagenet_utils.decode_predictions(preds, top=top)
-
-
-decode_predictions.__doc__ = imagenet_utils.decode_predictions.__doc__
