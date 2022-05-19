@@ -23,8 +23,8 @@ Reference:
 
 from ..weights import load_model_weights
 import tensorflow as tf
-from tensorlow import keras 
-form tensorflw.keras import layers, models
+from tensorflow import keras 
+form tensorflow.keras import layers, models
 import os
 import copy
 import math
