@@ -1,4 +1,4 @@
-from . import get_submodules_from_kwargs
+from tensorflow.keras import utils as keras_utils
 
 __all__ = ['load_model_weights']
 
@@ -11,7 +11,6 @@ def _find_weights(model_name, dataset, include_top):
 
 
 def load_model_weights(model, model_name, dataset, classes, include_top, **kwargs):
-    _, _, _, keras_utils = get_submodules_from_kwargs(kwargs)
 
     weights = _find_weights(model_name, dataset, include_top)
 
