@@ -1,34 +1,21 @@
 # Implementation: https://github.com/alexandrosstergiou/keras-DepthwiseConv3D
 
 import tensorflow as tf
-try:
-    from keras_applications import imagenet_utils
-    from keras import backend as K
-    from keras import initializers
-    from keras import regularizers
-    from keras import constraints
-    from keras import layers
-    from keras.engine import InputSpec
-    from keras.legacy.interfaces import conv3d_args_preprocessor, generate_legacy_interface
-    from keras.layers import Conv3D
-    from keras.backend.tensorflow_backend import _preprocess_padding, _preprocess_conv3d_input
-    from keras.utils import conv_utils
-except:
-    from tensorflow.keras import backend as K
-    from tensorflow.keras import initializers
-    from tensorflow.keras import regularizers
-    from tensorflow.keras import constraints
-    from tensorflow.keras import layers
-    from tensorflow.keras.layers import Conv3D
-    from tensorflow.keras.layers import InputSpec
+from tensorflow.keras import backend as K
+from tensorflow.keras import initializers
+from tensorflow.keras import regularizers
+from tensorflow.keras import constraints
+from tensorflow.keras import layers
+from tensorflow.keras.layers import Conv3D
+from tensorflow.keras.layers import InputSpec
     # from tensorflow.keras.utils import conv_utils
-    import tensorflow.keras.utils as conv_utils
-    import six
-    import warnings
-    from distutils.version import StrictVersion
+import tensorflow.keras.utils as conv_utils
+import six
+import warnings
+from distutils.version import StrictVersion
 
 
-    def generate_legacy_interface(allowed_positional_args=None,
+def generate_legacy_interface(allowed_positional_args=None,
                                   conversions=None,
                                   preprocessor=None,
                                   value_conversions=None):
@@ -88,8 +75,7 @@ except:
 
         return legacy_support
 
-
-    def conv3d_args_preprocessor(args, kwargs):
+def conv3d_args_preprocessor(args, kwargs):
         if len(args) > 5:
             raise TypeError('Layer can receive at most 4 positional arguments.')
         if len(args) == 5:
@@ -124,8 +110,7 @@ except:
                 args = [args[0], args[1], kernel_size]
         return args, kwargs, [('kernel_size', 'kernel_dim*')]
 
-
-    def _preprocess_padding(padding):
+def _preprocess_padding(padding):
         """Convert keras' padding to tensorflow's padding.
 
         # Arguments
@@ -145,16 +130,13 @@ except:
             raise ValueError('Invalid padding: ' + str(padding))
         return padding
 
-
-    def dtype(x):
+def dtype(x):
         return x.dtype.base_dtype.name
 
-
-    def _has_nchw_support():
+def _has_nchw_support():
         return True
 
-
-    def _preprocess_conv3d_input(x, data_format):
+def _preprocess_conv3d_input(x, data_format):
         """Transpose and cast the input before the conv3d.
 
         # Arguments
