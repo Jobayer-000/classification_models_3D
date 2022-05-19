@@ -115,7 +115,7 @@ DENSE_KERNEL_INITIALIZER = {
     }
 }
 
-layers = VersionAwareLayers()
+
 
 BASE_DOCSTRING = """Instantiates the {name} architecture.
 
