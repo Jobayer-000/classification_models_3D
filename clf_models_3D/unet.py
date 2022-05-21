@@ -224,7 +224,7 @@ class get_features_name():
                            'block3a_expand_activation', 'block2a_expand_activation')
 def Unet(
         backbone_name='efficientnetb0',
-        input_shape=(None,None None, 3),
+        input_shape=(None, None, None, 3),
         classes=1,
         activation='sigmoid',
         weights=None,
