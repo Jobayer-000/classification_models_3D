@@ -213,7 +213,7 @@ def build_unet(
 # ---------------------------------------------------------------------
 #  Unet Model
 # ---------------------------------------------------------------------
-get_features_name():
+class get_features_name():
         'efficientnetb0': ('block6a_expand_activation', 'block4a_expand_activation',
                            'block3a_expand_activation', 'block2a_expand_activation'),
         'efficientnetb1': ('block6a_expand_activation', 'block4a_expand_activation',
