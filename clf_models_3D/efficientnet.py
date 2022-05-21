@@ -409,14 +409,6 @@ def EfficientNet(
 
     # Create model.
     model = models.Model(inputs, x, name=model_name)
-
-    # Load weights.
-    if weights:
-        if type(weights) == str and os.path.exists(weights):
-            model.load_weights(weights)
-        else:
-            load_model_weights(model, model_name, weights, classes, include_top, **kwargs)
-
     return model
 
 
