@@ -213,10 +213,18 @@ def build_unet(
 # ---------------------------------------------------------------------
 #  Unet Model
 # ---------------------------------------------------------------------
-
+get_features_name():
+        'efficientnetb0': ('block6a_expand_activation', 'block4a_expand_activation',
+                           'block3a_expand_activation', 'block2a_expand_activation'),
+        'efficientnetb1': ('block6a_expand_activation', 'block4a_expand_activation',
+                           'block3a_expand_activation', 'block2a_expand_activation'),
+        'efficientnetb2': ('block6a_expand_activation', 'block4a_expand_activation',
+                           'block3a_expand_activation', 'block2a_expand_activation'),
+        'efficientnetb3': ('block6a_expand_activation', 'block4a_expand_activation',
+                           'block3a_expand_activation', 'block2a_expand_activation'),
 def Unet(
-        backbone_name='vgg16',
-        input_shape=(None, None, 3),
+        backbone_name='efficientnetb0',
+        input_shape=(None,None None, 3),
         classes=1,
         activation='sigmoid',
         weights=None,
@@ -264,17 +272,16 @@ def Unet(
     else:
         raise ValueError('Decoder block type should be in ("upsampling", "transpose"). '
                          'Got: {}'.format(decoder_block_type))
-
-    backbone = Backbones.get_backbone(
-        backbone_name,
-        input_shape=input_shape,
-        weights=encoder_weights,
-        include_top=False,
-        **kwargs,
-    )
-
+    if backbone_name=='efficientnetb0':
+        backbone = efficientnet.EfficientnetB0()
+    if backbone_name=='efficientnetb1':
+        backbone = efficientnet.EfficientnetB1()
+    if backbone_name=='efficientnetb2':
+        backbone = efficientnet.EfficientnetB2()
+    if backbone_name=='efficientnetb3':
+        backbone = efficientnet.EfficientnetB3()
     if encoder_features == 'default':
-        encoder_features = Backbones.get_feature_layers(backbone_name, n=4)
+        encoder_features = get_features_name.backbone_name
 
     model = build_unet(
         backbone=backbone,
