@@ -1,8 +1,9 @@
+from clf_models_3D import efficientnet
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers, models
 from tensorflow.keras import utils as keras_utils
-from clf_models_3d import efficientnet
+
 
 def Conv3dBn(
         filters,
