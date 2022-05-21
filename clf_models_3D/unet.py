@@ -214,13 +214,13 @@ def build_unet(
 #  Unet Model
 # ---------------------------------------------------------------------
 class get_features_name():
-        'efficientnetb0'= ('block6a_expand_activation', 'block4a_expand_activation',
+        efficientnetb0 = ('block6a_expand_activation', 'block4a_expand_activation',
                            'block3a_expand_activation', 'block2a_expand_activation')
-        'efficientnetb1'= ('block6a_expand_activation', 'block4a_expand_activation',
+        efficientnetb1 = ('block6a_expand_activation', 'block4a_expand_activation',
                            'block3a_expand_activation', 'block2a_expand_activation')
-        'efficientnetb2'= ('block6a_expand_activation', 'block4a_expand_activation',
+        efficientnetb2 = ('block6a_expand_activation', 'block4a_expand_activation',
                            'block3a_expand_activation', 'block2a_expand_activation')
-        'efficientnetb3'= ('block6a_expand_activation', 'block4a_expand_activation',
+        efficientnetb3 = ('block6a_expand_activation', 'block4a_expand_activation',
                            'block3a_expand_activation', 'block2a_expand_activation')
 def Unet(
         backbone_name='efficientnetb0',
