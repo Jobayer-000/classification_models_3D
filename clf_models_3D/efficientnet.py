@@ -408,7 +408,7 @@ def EfficientNet(
         inputs = img_input
 
     # Create model.
-    model = training.Model(inputs, x, name=model_name)
+    model = models.Model(inputs, x, name=model_name)
 
     # Load weights.
     if weights:
