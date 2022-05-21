@@ -309,15 +309,10 @@ def EfficientNet(
         if type(stride_size[i]) not in (tuple, list):
             stride_size[i] = (stride_size[i], stride_size[i], stride_size[i])
 
-    if input_tensor is None:
-        img_input = layers.Input(shape=input_shape)
-    else:
-        if not backend.is_keras_tensor(input_tensor):
-            img_input = layers.Input(tensor=input_tensor, shape=input_shape)
-        else:
-            img_input = input_tensor
+   
+    img_input = layers.Input(shape=input_shape)
 
-    bn_axis = -1 if backend.image_data_format() == 'channels_last' else 1
+    bn_axis = -1 
 
     def round_filters(filters, divisor=depth_divisor):
         """Round number of filters based on depth multiplier."""
@@ -334,11 +329,9 @@ def EfficientNet(
 
     # Build stem
     x = img_input
-    x = layers.Normalization(axis=bn_axis)(x)
-
     x = layers.ZeroPadding3D(
         padding=correct_pad_3d(x, 3),
-        name='stem_conv_pad')(x)
+        name='stem_conv_pad')(img_input)
     x = layers.Conv3D(
         round_filters(32),
         3,
