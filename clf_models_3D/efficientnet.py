@@ -189,8 +189,8 @@ def correct_pad_3d(inputs, kernel_size):
       Returns:
         A tuple.
       """
-    img_dim = 2 if backend.image_data_format() == 'channels_first' else 1
-    input_size = backend.int_shape(inputs)[img_dim:(img_dim + 3)]
+    img_dim = 2 
+    input_size = inputs.shape[img_dim:(img_dim + 3)]
     if isinstance(kernel_size, int):
         kernel_size = (kernel_size, kernel_size, kernel_size)
     if input_size[0] is None:
@@ -451,8 +451,7 @@ def block(
       Returns:
           output tensor for the block.
       """
-    bn_axis = -1 if backend.image_data_format() == 'channels_last' else 1
-
+    bn_axis = -1 
     # Expansion phase
     filters = filters_in * expand_ratio
     if expand_ratio != 1:
