@@ -283,7 +283,7 @@ def Unet(
     if backbone_name=='efficientnetb3':
         backbone = efficientnet.EfficientnetB3()
     if encoder_features == 'default':
-        encoder_features = get_features_name.backbone_name
+        encoder_features = get_features_name[backbone_name]
 
     model = build_unet(
         backbone=backbone,
