@@ -38,7 +38,7 @@ def Conv3dBn(
     if block_name is not None and use_batchnorm:
         bn_name = block_name + '_bn'
 
-    bn_axis = 4 if backend.image_data_format() == 'channels_last' else 1
+    bn_axis = 4
 
     def wrapper(input_tensor):
 
