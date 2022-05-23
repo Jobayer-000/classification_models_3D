@@ -80,8 +80,6 @@ def Conv3dBn(
   
   
 def Conv3x3BnReLU(filters, use_batchnorm, name=None):
-    kwargs = get_submodules()
-
     def wrapper(input_tensor):
         return Conv3dBn(
             filters,
@@ -90,8 +88,7 @@ def Conv3x3BnReLU(filters, use_batchnorm, name=None):
             kernel_initializer='he_uniform',
             padding='same',
             use_batchnorm=use_batchnorm,
-            name=name,
-            **kwargs
+            name=name
         )(input_tensor)
 
     return wrapper
