@@ -275,13 +275,13 @@ def Unet(
         raise ValueError('Decoder block type should be in ("upsampling", "transpose"). '
                          'Got: {}'.format(decoder_block_type))
     if backbone_name=='efficientnetb0':
-        backbone = efficientnet.EfficientnetB0()
+        backbone = efficientnet.EfficientNetB0()
     if backbone_name=='efficientnetb1':
-        backbone = efficientnet.EfficientnetB1()
+        backbone = efficientnet.EfficientNetB1()
     if backbone_name=='efficientnetb2':
-        backbone = efficientnet.EfficientnetB2()
+        backbone = efficientnet.EfficientNetB2()
     if backbone_name=='efficientnetb3':
-        backbone = efficientnet.EfficientnetB3()
+        backbone = efficientnet.EfficientNetB3()
     if encoder_features == 'default':
         encoder_features = get_features_name[backbone_name]
 
