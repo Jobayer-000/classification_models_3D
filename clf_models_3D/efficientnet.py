@@ -475,7 +475,7 @@ def block(
         strides=strides,
         padding=conv_pad,
         use_bias=False,
-        depthwise_initializer=CONV_KERNEL_INITIALIZER,
+        kernel_initializer=CONV_KERNEL_INITIALIZER,
         name=name + 'dwconv'
     )(x)
     x = layers.BatchNormalization(axis=bn_axis, name=name + 'bn')(x)
