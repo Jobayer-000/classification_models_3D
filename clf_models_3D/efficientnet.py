@@ -468,7 +468,9 @@ def block(
         conv_pad = 'valid'
     else:
         conv_pad = 'same'
+    filter = x.shape[-1]
     x = DepthwiseConv3D(
+        filter
         kernel_size,
         strides=strides,
         padding=conv_pad,
