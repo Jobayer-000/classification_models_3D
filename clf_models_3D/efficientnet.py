@@ -30,7 +30,7 @@ import math
 load_model_weights = weights.load_model_weights
 
 from clf_models_3D import _DepthwiseConv3D
-DepthwiseConv3D = _DepthwiseConv3D.DepthwiseConv3D
+DepthwiseConv3D = layers.Conv3D
 
 DEFAULT_BLOCKS_ARGS = [{
     'kernel_size': 3,
