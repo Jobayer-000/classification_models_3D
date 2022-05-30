@@ -329,14 +329,11 @@ def EfficientNet(
 
     # Build stem
     x = img_input
-    x = layers.ZeroPadding3D(
-        padding=correct_pad_3d(x, 3),
-        name='stem_conv_pad')(img_input)
     x = layers.Conv3D(
         round_filters(32),
         3,
         strides=stride_size[0],
-        padding='valid',
+        padding='same',
         use_bias=False,
         kernel_initializer=CONV_KERNEL_INITIALIZER,
         name='stem_conv')(x)
