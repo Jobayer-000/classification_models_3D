@@ -338,7 +338,7 @@ def EfficientNet(
         strides=stride_size[0],
         padding='valid',
         use_bias=False,
-        kernel_initializer='VarianceScaling',
+        kernel_initializer=CONV_KERNEL_INITIALIZER,
         name='stem_conv')(x)
     x = layers.BatchNormalization(axis=bn_axis, name='stem_bn')(x)
     x = layers.Activation(activation, name='stem_activation')(x)
