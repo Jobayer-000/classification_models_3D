@@ -227,7 +227,7 @@ def Unet(
         classes=1,
         activation='sigmoid',
         weights=None,
-        encoder_weights='imagenet',
+        encoder_weights=None,
         encoder_freeze=False,
         encoder_features='default',
         decoder_block_type='upsampling',
@@ -272,7 +272,7 @@ def Unet(
         raise ValueError('Decoder block type should be in ("upsampling", "transpose"). '
                          'Got: {}'.format(decoder_block_type))
     if backbone_name=='efficientnetb0':
-        backbone = efficientnet.EfficientNetB0(input_shape=input_shape)
+        backbone = efficientnet.EfficientNetB0(input_shape=input_shape, weight=None)
     if backbone_name=='efficientnetb1':
         backbone = efficientnet.EfficientNetB1(input_shape=input_shape)
     if backbone_name=='efficientnetb2':
