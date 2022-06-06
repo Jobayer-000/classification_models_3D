@@ -347,7 +347,7 @@ class DepthwiseConv3D(layers.Conv3D):
     def call(self, inputs, training=None):
         #inputs = _preprocess_conv3d_input(inputs, self.data_format)
         outputs = tf.concat(
-                [tf.nn.conv3d(inputs[0][:, :, :, :, i:i+self.input_dim//self.groups], self.depthwise_kernel[:, :, :, i:i+self.input_dim//self.groups, :],
+                [tf.nn.conv3d(inputs[:, :, :, :, i:i+self.input_dim//self.groups], self.depthwise_kernel[:, :, :, i:i+self.input_dim//self.groups, :],
                     strides=self._strides,
                     padding=self._padding,
                     dilations=self.dilation,
