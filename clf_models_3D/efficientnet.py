@@ -30,7 +30,8 @@ import math
 load_model_weights = weights.load_model_weights
 
 from clf_models_3D import _DepthwiseConv3D
-DepthwiseConv3D = layers.Conv3D
+DepthwiseConv3D = _DepthwiseConv3D.DepthwiseConv3D
+
 
 DEFAULT_BLOCKS_ARGS = [{
     'kernel_size': 3,
@@ -467,12 +468,11 @@ def block(
         conv_pad = 'same'
     filter = x.shape[-1]
     x = DepthwiseConv3D(
-        filter,
         kernel_size,
         strides=strides,
         padding=conv_pad,
         use_bias=False,
-        kernel_initializer=CONV_KERNEL_INITIALIZER,
+        depthwise_initializer=CONV_KERNEL_INITIALIZER,
         name=name + 'dwconv'
     )(x)
     x = layers.BatchNormalization(axis=bn_axis, name=name + 'bn')(x)
