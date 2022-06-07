@@ -905,10 +905,11 @@ def EfficientNetV2(
     Models = []
     for (i, args) in enumerate(blocks_args):
         assert args["num_repeat"] > 0
-        if i!=0:
-         img_input = layers.Input(shape=x.shape[1:])
+        if i==0:
+            input = x
+        else:
+            input = layers.Input(shape=x.shape[1:])
         
-
         # Update block input and output filters based on depth multiplier.
         args["input_filters"] = round_filters(
             filters=args["input_filters"],
@@ -940,9 +941,12 @@ def EfficientNetV2(
                 survival_probability=drop_connect_rate * b / blocks,
                 name="block{}{}_".format(i + 1, chr(j + 97)),
                 **args,
-            )(x)
+            )(input)
             if i<6:
-                Models.append(models.Model(inputs=[img_input], outputs=[x]))
+                if i!=0:
+                    Models.append(models.Model(inputs=[input], outputs=[x]))
+                else:
+                    Models.append(models.Model(inputs=[img_input], outputs=[x]))
     top_filters = round_filters(
         filters=1280,
         width_coefficient=width_coefficient,
