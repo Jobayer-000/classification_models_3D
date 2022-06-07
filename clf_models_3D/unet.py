@@ -1,4 +1,4 @@
-from clf_models_3D import efficientnetv2
+from clf_models_3D import efficientnetv2, efficientnet
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers, models
@@ -167,12 +167,12 @@ def build_unet(
         dropout=None,
 ):
  
-    backbone_1 = keras.Model([backbone[0].input], [backbone[0].output, backbone[0].get_layer(name=skip_connection_layers[0])])
-    backbone_2 = keras.Model([backbone[1].input], [backbone[1].output, backbone[1].get_layer(name=skip_connection_layers[1])])
+    backbone_1 = keras.Model([backbone[0].input], [backbone[0].output, backbone[0].get_layer(name=skip_connection_layers[3])])
+    backbone_2 = keras.Model([backbone[1].input], [backbone[1].output, backbone[1].get_layer(name=skip_connection_layers[2])])
     backbone_3 = backbone[2]
-    backbone_4 = keras.Model([backbone[3].input], [backbone[3].output, backbone[3].get_layer(name=skip_connection_layers[2])])
+    backbone_4 = keras.Model([backbone[3].input], [backbone[3].output, backbone[3].get_layer(name=skip_connection_layers[1])])
     backbone_5 = backbone[4]
-    backbone_6 = keras.Model([backbone[5].input], [backbone[5].output, backbone[5].get_layer(name=skip_connection_layers[3])])
+    backbone_6 = keras.Model([backbone[5].input], [backbone[5].output, backbone[5].get_layer(name=skip_connection_layers[0])])
     
     skips  =[bacebone_1.output[1], bacebone_2.output[1], bacebone_4.output[1], bacebone_6.output[1], bacebone_6.output[0]]
     x = skips[-1]
