@@ -923,7 +923,7 @@ def EfficientNetV2(
         if i==0:
             input = img_input
         else:
-            input = layers.Input(shape=x.output.shape[1:])
+            input = layers.Input(shape=x.shape[1:])
         
 
         # Update block input and output filters based on depth multiplier.
