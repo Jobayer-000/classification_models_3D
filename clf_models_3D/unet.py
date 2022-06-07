@@ -222,7 +222,21 @@ get_features_name = {
         'efficientnetb2' : ('block6a_expand_activation', 'block4a_expand_activation',
                            'block3a_expand_activation', 'block2a_expand_activation'),
         'efficientnetb3' : ('block6a_expand_activation', 'block4a_expand_activation',
-                           'block3a_expand_activation', 'block2a_expand_activation')
+                           'block3a_expand_activation', 'block2a_expand_activation'),
+        'efficientnetv2-b0': ('block6a_expand_activation', 'block4a_expand_activation',
+                             'block2b_add', 'block1a_project_activation'),
+        'efficientnetv2-b1': ('block6a_expand_activation', 'block4a_expand_activation',
+                             'block2b_add', 'block1a_project_activation'),
+        'efficientnetv2-b2': ('block6a_expand_activation', 'block4a_expand_activation',
+                             'block2b_add', 'block1a_project_activation'),
+        'efficientnetv2-b3': ('block6a_expand_activation', 'block4a_expand_activation',
+                             'block2b_add', 'block1a_project_activation'),
+        'efficientnetv2-s': ('block6a_expand_activation', 'block4a_expand_activation',
+                            'block2b_add', 'block1a_project_activation'),
+        'efficientnetv2-m': ('block6a_expand_activation', 'block4a_expand_activation',
+                            'block2b_add', 'block1a_project_activation'),
+        'efficientnetv2-l': ('block6a_expand_activation', 'block4a_expand_activation',
+                            'block2b_add', 'block1a_project_activation')
 }
 def Unet(
         backbone_name='efficientnetb0',
