@@ -985,7 +985,7 @@ def EfficientNetV2(
             x = layers.GlobalAveragePooling3D(name="avg_pool")(x)
         elif pooling == "max":
             x = layers.GlobalMaxPooling3D(name="max_pool")(x)
-    Models.append(models.Model(inputs=[img_input], outputs=[x]))        
+    Models.append(models.Model(inputs=[input], outputs=[x]))        
     return Models
 
 
