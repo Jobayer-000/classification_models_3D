@@ -185,7 +185,7 @@ def build_unet(
     for i in range(n_upsample_blocks):
 
         if i < len(skips[:-1]):
-            skip = skips[-i]
+            skip = skips[i]
         else:
             skip = None
 
