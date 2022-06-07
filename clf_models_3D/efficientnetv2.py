@@ -936,7 +936,7 @@ def EfficientNetV2(
     blocks = float(sum(args["num_repeat"] for args in blocks_args))
 
     strides_count = 1
-    models = []
+    Models = []
     for (i, args) in enumerate(blocks_args):
         assert args["num_repeat"] > 0
         if i==0:
@@ -977,8 +977,48 @@ def EfficientNetV2(
                 name="block{}{}_".format(i + 1, chr(j + 97)),
                 **args,
             )(x)
-            models.append(models.Model(inputs=[input], outputs=[x]))
-    return models
+            if i<6:
+                Models.append(models.Model(inputs=[input], outputs=[x]))
+    top_filters = round_filters(
+        filters=1280,
+        width_coefficient=width_coefficient,
+        min_depth=min_depth,
+        depth_divisor=depth_divisor
+    )
+    x = layers.Conv3D(
+        filters=top_filters,
+        kernel_size=1,
+        strides=1,
+        kernel_initializer=CONV_KERNEL_INITIALIZER,
+        padding="same",
+        data_format="channels_last",
+        use_bias=False,
+        name="top_conv",
+    )(x)
+    x = layers.BatchNormalization(
+        axis=bn_axis,
+        momentum=bn_momentum,
+        name="top_bn",
+    )(x)
+    x = layers.Activation(activation=activation, name="top_activation")(x)
+
+    if include_top:
+        x = layers.GlobalAveragePooling3D(name="avg_pool")(x)
+        if dropout_rate > 0:
+            x = layers.Dropout(dropout_rate, name="top_dropout")(x)
+        x = layers.Dense(
+            classes,
+            activation=classifier_activation,
+            kernel_initializer=DENSE_KERNEL_INITIALIZER,
+            bias_initializer=tf.constant_initializer(0),
+            name="predictions")(x)
+    else:
+        if pooling == "avg":
+            x = layers.GlobalAveragePooling3D(name="avg_pool")(x)
+        elif pooling == "max":
+            x = layers.GlobalMaxPooling3D(name="max_pool")(x)
+    Models.append(models.Model(inputs=[input], outputs=[x]))        
+    return Models
 
 
 def EfficientNetV2B0(
