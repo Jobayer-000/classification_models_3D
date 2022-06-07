@@ -869,23 +869,10 @@ def EfficientNetV2(
         if type(stride_size[i]) not in (tuple, list):
             stride_size[i] = (stride_size[i], stride_size[i], stride_size[i])
 
-    x = layers.Input(shape=input_shape)
+    img_input = layers.Input(shape=input_shape)
     bn_axis = -1
 
-    if include_preprocessing:
-        # Apply original V1 preprocessing for Bx variants
-        # if number of channels allows it
-        num_channels = input_shape[-1]
-        if model_name.split("-")[-1].startswith("b") and num_channels == 3:
-            x = layers.Rescaling(scale=1. / 255)(x)
-            x = layers.Normalization(
-                mean=[0.485, 0.456, 0.406],
-                variance=[0.229 ** 2, 0.224 ** 2, 0.225 ** 2],
-                axis=bn_axis,
-            )(x)
-        else:
-            x = layers.Rescaling(scale=1. / 128.0, offset=-1)(x)
-
+    
     # Build stem
     stem_filters = round_filters(
         filters=blocks_args[0]["input_filters"],
@@ -901,7 +888,7 @@ def EfficientNetV2(
         padding="same",
         use_bias=False,
         name="stem_conv",
-    )(x)
+    )(img_input)
     x = layers.BatchNormalization(
         axis=bn_axis,
         momentum=bn_momentum,
@@ -918,10 +905,8 @@ def EfficientNetV2(
     Models = []
     for (i, args) in enumerate(blocks_args):
         assert args["num_repeat"] > 0
-        if i==0:
-            input = img_input
-        else:
-            input = layers.Input(shape=x.shape[1:])
+        if i!=0:
+         img_input = layers.Input(shape=x.shape[1:])
         
 
         # Update block input and output filters based on depth multiplier.
@@ -957,7 +942,7 @@ def EfficientNetV2(
                 **args,
             )(x)
             if i<6:
-                Models.append(models.Model(inputs=[input], outputs=[x]))
+                Models.append(models.Model(inputs=[img_input], outputs=[x]))
     top_filters = round_filters(
         filters=1280,
         width_coefficient=width_coefficient,
