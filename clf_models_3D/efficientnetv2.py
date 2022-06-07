@@ -83,7 +83,7 @@ DEFAULT_BLOCKS_ARGS = {
         "num_repeat": 15,
         "output_filters": 256,
         "se_ratio": 0.25,
-        "strides": 2,
+        "strides": 1,
     }],
     "efficientnetv2-m": [
         {
