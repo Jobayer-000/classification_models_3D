@@ -25,7 +25,7 @@ import math
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers, models
-from clf_models_3d import _DepthwiseConv3D
+from clf_models_3D import _DepthwiseConv3D
 DepthwiseConv3D = _DepthwiseConv3D.DepthwiseConv3D
 
 
