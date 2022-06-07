@@ -848,18 +848,6 @@ def EfficientNetV2(
     if blocks_args == "default":
         blocks_args = DEFAULT_BLOCKS_ARGS[model_name]
 
-    if not (weights in {"imagenet", None} or tf.io.gfile.exists(weights)):
-        raise ValueError("The `weights` argument should be either "
-                         "`None` (random initialization), `imagenet` "
-                         "(pre-training on ImageNet), "
-                         "or the path to the weights file to be loaded."
-                         f"Received: weights={weights}")
-
-    if weights == "imagenet" and include_top and classes != 1000:
-        raise ValueError("If using `weights` as `'imagenet'` with `include_top`"
-                         " as true, `classes` should be 1000"
-                         f"Received: classes={classes}")
-
     # if stride_size is scalar make it tuple of length 5 with elements tuple of size 3
     # (stride for each dimension for more flexibility)
     if type(stride_size) not in (tuple, list):
@@ -881,15 +869,8 @@ def EfficientNetV2(
         if type(stride_size[i]) not in (tuple, list):
             stride_size[i] = (stride_size[i], stride_size[i], stride_size[i])
 
-    if input_tensor is None:
-        img_input = layers.Input(shape=input_shape)
-    else:
-        if not backend.is_keras_tensor(input_tensor):
-            img_input = layers.Input(tensor=input_tensor, shape=input_shape)
-        else:
-            img_input = input_tensor
-
-    bn_axis = -1 if backend.image_data_format() == "channels_last" else 1
+    img_input = layers.Input(shape=input_shape)
+    bn_axis = -1
 
     x = img_input
 
