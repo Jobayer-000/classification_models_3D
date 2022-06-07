@@ -174,7 +174,7 @@ def build_unet(
     backbone_5 = backbone[4]
     backbone_6 = keras.Model([backbone[5].input], [backbone[5].output, backbone[5].get_layer(name=skip_connection_layers[0]).output])
     
-    skips  =[backbone_1.output[1], backbone_2.output[1], backbone_4.output[1], backbone_6.output[1], backbone_6.output[0]]
+    skips  =[backbone_6.output[1], backbone_4.output[1], backbone_2.output[1], backbone_1.output[1], backbone_6.output[0]]
     x = skips[-1]
     # add center block if previous operation was maxpooling (for vgg models)
     if isinstance(backbone_6.layers[-1], layers.MaxPooling3D):
@@ -185,7 +185,7 @@ def build_unet(
     for i in range(n_upsample_blocks):
 
         if i < len(skips[:-1]):
-            skip = skips[i]
+            skip = skips[-i]
         else:
             skip = None
 
