@@ -585,10 +585,7 @@ def MBConvBlock(
     name=None,
 ):
     """MBConv block: Mobile Inverted Residual Bottleneck."""
-    bn_axis = -1 if backend.image_data_format() == "channels_last" else 1
-
-    if name is None:
-        name = backend.get_uid("block0")
+    bn_axis = -1
 
     def apply(inputs):
         # Expansion phase
