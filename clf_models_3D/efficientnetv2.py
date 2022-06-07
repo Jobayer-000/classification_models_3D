@@ -869,10 +869,8 @@ def EfficientNetV2(
         if type(stride_size[i]) not in (tuple, list):
             stride_size[i] = (stride_size[i], stride_size[i], stride_size[i])
 
-    img_input = layers.Input(shape=input_shape)
+    x = layers.Input(shape=input_shape)
     bn_axis = -1
-
-    x = img_input
 
     if include_preprocessing:
         # Apply original V1 preprocessing for Bx variants
