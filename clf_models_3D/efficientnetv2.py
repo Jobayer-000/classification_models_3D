@@ -1189,37 +1189,3 @@ def EfficientNetV2L(
         include_preprocessing=include_preprocessing,
         **kwargs,
     )
-
-
-EfficientNetV2B0.__doc__ = BASE_DOCSTRING.format(name="EfficientNetV2B0")
-EfficientNetV2B1.__doc__ = BASE_DOCSTRING.format(name="EfficientNetV2B1")
-EfficientNetV2B2.__doc__ = BASE_DOCSTRING.format(name="EfficientNetV2B2")
-EfficientNetV2B3.__doc__ = BASE_DOCSTRING.format(name="EfficientNetV2B3")
-EfficientNetV2S.__doc__ = BASE_DOCSTRING.format(name="EfficientNetV2S")
-EfficientNetV2M.__doc__ = BASE_DOCSTRING.format(name="EfficientNetV2M")
-EfficientNetV2L.__doc__ = BASE_DOCSTRING.format(name="EfficientNetV2L")
-
-
-def preprocess_input(x, data_format=None):  # pylint: disable=unused-argument
-    """A placeholder method for backward compatibility.
-    The preprocessing logic has been included in the EfficientNetV2 model
-    implementation. Users are no longer required to call this method to normalize
-    the input data. This method does nothing and only kept as a placeholder to
-    align the API surface between old and new version of model.
-    Args:
-    x: A floating point `numpy.array` or a `tf.Tensor`.
-    data_format: Optional data format of the image tensor/array. Defaults to
-      None, in which case the global setting
-      `tf.keras.backend.image_data_format()` is used (unless you changed it, it
-      defaults to "channels_last").{mode}
-    Returns:
-    Unchanged `numpy.array` or `tf.Tensor`.
-    """
-    return x
-
-
-def decode_predictions(preds, top=5):
-    return imagenet_utils.decode_predictions(preds, top=top)
-
-
-decode_predictions.__doc__ = imagenet_utils.decode_predictions.
