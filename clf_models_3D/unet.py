@@ -239,7 +239,7 @@ get_features_name = {
                             'block2b_add', 'block1a_project_activation')
 }
 def Unet(
-        backbone_name='efficientnetb0',
+        backbone_name='efficientnetv2-s',
         input_shape=(None, None, None, 3),
         classes=1,
         activation='sigmoid',
