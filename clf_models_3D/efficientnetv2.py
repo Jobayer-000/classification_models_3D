@@ -941,7 +941,7 @@ def EfficientNetV2(
                 name="block{}{}_".format(i + 1, chr(j + 97)),
                 **args,
             )(x)
-        if i<6:
+        if i<5:
             Models.append(models.Model(inputs=[img_input], outputs=[x]))
                
     top_filters = round_filters(
