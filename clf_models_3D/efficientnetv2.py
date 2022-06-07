@@ -23,17 +23,11 @@ Reference:
 import os
 import copy
 import math
-
-from .. import get_submodules_from_kwargs
-from ..weights import load_model_weights
-from keras import backend
-from keras import layers
-from keras.applications import imagenet_utils
-from keras.engine import training
-from keras.utils import data_utils
-from keras.utils import layer_utils
-import tensorflow.compat.v2 as tf
-from ..models._DepthwiseConv3D import DepthwiseConv3D
+import tensroflow as tf
+from tensorflow import keras
+from tensorflow.keras import layers, models
+from clf_models_3d import _DepthwiseConv3D
+DepthwiseConv3D = _DepthwiseConv3D.DepthwiseConv3D
 
 
 DEFAULT_BLOCKS_ARGS = {
@@ -65,7 +59,7 @@ DEFAULT_BLOCKS_ARGS = {
         "se_ratio": 0,
         "strides": 2,
     }, {
-        "conv_type": 0,
+        "conv_type": 1,
         "expand_ratio": 4,
         "input_filters": 64,
         "kernel_size": 3,
@@ -74,7 +68,7 @@ DEFAULT_BLOCKS_ARGS = {
         "se_ratio": 0.25,
         "strides": 2,
     }, {
-        "conv_type": 0,
+        "conv_type": 1,
         "expand_ratio": 6,
         "input_filters": 128,
         "kernel_size": 3,
@@ -83,7 +77,7 @@ DEFAULT_BLOCKS_ARGS = {
         "se_ratio": 0.25,
         "strides": 1,
     }, {
-        "conv_type": 0,
+        "conv_type": 1,
         "expand_ratio": 6,
         "input_filters": 160,
         "kernel_size": 3,
@@ -131,7 +125,7 @@ DEFAULT_BLOCKS_ARGS = {
             "expand_ratio": 4,
             "se_ratio": 0.25,
             "strides": 2,
-            "conv_type": 0,
+            "conv_type": 1,
         },
         {
             "kernel_size": 3,
@@ -141,7 +135,7 @@ DEFAULT_BLOCKS_ARGS = {
             "expand_ratio": 6,
             "se_ratio": 0.25,
             "strides": 1,
-            "conv_type": 0,
+            "conv_type": 1,
         },
         {
             "kernel_size": 3,
@@ -151,7 +145,7 @@ DEFAULT_BLOCKS_ARGS = {
             "expand_ratio": 6,
             "se_ratio": 0.25,
             "strides": 2,
-            "conv_type": 0,
+            "conv_type": 1,
         },
         {
             "kernel_size": 3,
@@ -161,7 +155,7 @@ DEFAULT_BLOCKS_ARGS = {
             "expand_ratio": 6,
             "se_ratio": 0.25,
             "strides": 1,
-            "conv_type": 0,
+            "conv_type": 1,
         },
     ],
     "efficientnetv2-l": [
@@ -704,11 +698,7 @@ def FusedMBConvBlock(
     name=None,
 ):
     """Fused MBConv Block: Fusing the proj conv1x1 and depthwise_conv into a conv2d."""
-    bn_axis = -1 if backend.image_data_format() == "channels_last" else 1
-
-    if name is None:
-        name = backend.get_uid("block0")
-
+    bn_axis = -1 
     def apply(inputs):
         filters = input_filters * expand_ratio
         if expand_ratio != 1:
@@ -855,9 +845,7 @@ def EfficientNetV2(
         ValueError: if `classifier_activation` is not `"softmax"` or `None` when
           using a pretrained top layer.
       """
-    global backend, layers, models, keras_utils
-    backend, layers, models, keras_utils = get_submodules_from_kwargs(kwargs)
-
+    
     if blocks_args == "default":
         blocks_args = DEFAULT_BLOCKS_ARGS[model_name]
 
@@ -949,8 +937,14 @@ def EfficientNetV2(
     blocks = float(sum(args["num_repeat"] for args in blocks_args))
 
     strides_count = 1
+    models = []
     for (i, args) in enumerate(blocks_args):
         assert args["num_repeat"] > 0
+        if i==0:
+            input = img_input
+        else:
+            input = layers.Input(shape=x.output.shape[1:])
+        
 
         # Update block input and output filters based on depth multiplier.
         args["input_filters"] = round_filters(
@@ -984,66 +978,9 @@ def EfficientNetV2(
                 name="block{}{}_".format(i + 1, chr(j + 97)),
                 **args,
             )(x)
+            models.append(models.Model(inputs=[input], outputs=[x]))
 
-    # Build top
-    top_filters = round_filters(
-        filters=1280,
-        width_coefficient=width_coefficient,
-        min_depth=min_depth,
-        depth_divisor=depth_divisor
-    )
-    x = layers.Conv3D(
-        filters=top_filters,
-        kernel_size=1,
-        strides=1,
-        kernel_initializer=CONV_KERNEL_INITIALIZER,
-        padding="same",
-        data_format="channels_last",
-        use_bias=False,
-        name="top_conv",
-    )(x)
-    x = layers.BatchNormalization(
-        axis=bn_axis,
-        momentum=bn_momentum,
-        name="top_bn",
-    )(x)
-    x = layers.Activation(activation=activation, name="top_activation")(x)
-
-    if include_top:
-        x = layers.GlobalAveragePooling3D(name="avg_pool")(x)
-        if dropout_rate > 0:
-            x = layers.Dropout(dropout_rate, name="top_dropout")(x)
-        imagenet_utils.validate_activation(classifier_activation, weights)
-        x = layers.Dense(
-            classes,
-            activation=classifier_activation,
-            kernel_initializer=DENSE_KERNEL_INITIALIZER,
-            bias_initializer=tf.constant_initializer(0),
-            name="predictions")(x)
-    else:
-        if pooling == "avg":
-            x = layers.GlobalAveragePooling3D(name="avg_pool")(x)
-        elif pooling == "max":
-            x = layers.GlobalMaxPooling3D(name="max_pool")(x)
-
-    # Ensure that the model takes into account
-    # any potential predecessors of `input_tensor`.
-    if input_tensor is not None:
-        inputs = layer_utils.get_source_inputs(input_tensor)
-    else:
-        inputs = img_input
-
-    # Create model.
-    model = training.Model(inputs, x, name=model_name)
-
-    # Load weights.
-    if weights:
-        if type(weights) == str and os.path.exists(weights):
-            model.load_weights(weights)
-        else:
-            load_model_weights(model, model_name, weights, classes, include_top, **kwargs)
-
-    return model
+    return models
 
 
 def EfficientNetV2B0(
