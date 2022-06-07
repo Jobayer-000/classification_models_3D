@@ -611,7 +611,7 @@ def MBConvBlock(
             x = inputs
 
         # Depthwise conv
-        x = layer.Conv3D(
+        x = layers.Conv3D(
             filters=filters,
             kernel_size=kernel_size,
             strides=strides,
