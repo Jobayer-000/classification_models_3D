@@ -979,7 +979,6 @@ def EfficientNetV2(
                 **args,
             )(x)
             models.append(models.Model(inputs=[input], outputs=[x]))
-
     return models
 
 
