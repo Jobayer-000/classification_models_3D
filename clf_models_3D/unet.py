@@ -167,8 +167,8 @@ def build_unet(
         dropout=None,
 ):
  
-    backbone_1 = keras.Model([backbone[0].input], [backbone[0].output, backbone[0].get_layer(name=skip_connection_layers[3]).outut])
-    backbone_2 = keras.Model([backbone[1].input], [backbone[1].output, backbone[1].get_layer(name=skip_connection_layers[2]).outut])
+    backbone_1 = keras.Model([backbone[0].input], [backbone[0].output, backbone[0].get_layer(name=skip_connection_layers[3]).output])
+    backbone_2 = keras.Model([backbone[1].input], [backbone[1].output, backbone[1].get_layer(name=skip_connection_layers[2]).output])
     backbone_3 = backbone[2]
     backbone_4 = keras.Model([backbone[3].input], [backbone[3].output, backbone[3].get_layer(name=skip_connection_layers[1]).output])
     backbone_5 = backbone[4]
