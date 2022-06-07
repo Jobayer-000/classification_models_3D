@@ -615,7 +615,7 @@ def MBConvBlock(
             filters=filters,
             kernel_size=kernel_size,
             strides=strides,
-            depthwise_initializer=CONV_KERNEL_INITIALIZER,
+            kernel_initializer=CONV_KERNEL_INITIALIZER,
             padding="same",
             data_format="channels_last",
             use_bias=False,
