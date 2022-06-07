@@ -28,7 +28,6 @@ from tensorflow.keras import layers, models
 from clf_models_3D import _DepthwiseConv3D
 DepthwiseConv3D = _DepthwiseConv3D.DepthwiseConv3D
 
-
 DEFAULT_BLOCKS_ARGS = {
     "efficientnetv2-s": [{
         "kernel_size": 3,
@@ -58,7 +57,7 @@ DEFAULT_BLOCKS_ARGS = {
         "se_ratio": 0,
         "strides": 2,
     }, {
-        "conv_type": 1,
+        "conv_type": 0,
         "expand_ratio": 4,
         "input_filters": 64,
         "kernel_size": 3,
@@ -67,7 +66,7 @@ DEFAULT_BLOCKS_ARGS = {
         "se_ratio": 0.25,
         "strides": 2,
     }, {
-        "conv_type": 1,
+        "conv_type": 0,
         "expand_ratio": 6,
         "input_filters": 128,
         "kernel_size": 3,
@@ -76,14 +75,14 @@ DEFAULT_BLOCKS_ARGS = {
         "se_ratio": 0.25,
         "strides": 1,
     }, {
-        "conv_type": 1,
+        "conv_type": 0,
         "expand_ratio": 6,
         "input_filters": 160,
         "kernel_size": 3,
         "num_repeat": 15,
         "output_filters": 256,
         "se_ratio": 0.25,
-        "strides": 1,
+        "strides": 2,
     }],
     "efficientnetv2-m": [
         {
@@ -124,7 +123,7 @@ DEFAULT_BLOCKS_ARGS = {
             "expand_ratio": 4,
             "se_ratio": 0.25,
             "strides": 2,
-            "conv_type": 1,
+            "conv_type": 0,
         },
         {
             "kernel_size": 3,
@@ -134,7 +133,7 @@ DEFAULT_BLOCKS_ARGS = {
             "expand_ratio": 6,
             "se_ratio": 0.25,
             "strides": 1,
-            "conv_type": 1,
+            "conv_type": 0,
         },
         {
             "kernel_size": 3,
@@ -144,7 +143,7 @@ DEFAULT_BLOCKS_ARGS = {
             "expand_ratio": 6,
             "se_ratio": 0.25,
             "strides": 2,
-            "conv_type": 1,
+            "conv_type": 0,
         },
         {
             "kernel_size": 3,
@@ -154,7 +153,7 @@ DEFAULT_BLOCKS_ARGS = {
             "expand_ratio": 6,
             "se_ratio": 0.25,
             "strides": 1,
-            "conv_type": 1,
+            "conv_type": 0,
         },
     ],
     "efficientnetv2-l": [
@@ -615,7 +614,8 @@ def MBConvBlock(
             x = inputs
 
         # Depthwise conv
-        x = DepthwiseConv3D(
+        x = layer.Conv3D(
+            filters=filters
             kernel_size=kernel_size,
             strides=strides,
             depthwise_initializer=CONV_KERNEL_INITIALIZER,
