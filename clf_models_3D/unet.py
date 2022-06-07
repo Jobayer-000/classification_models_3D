@@ -297,19 +297,19 @@ def Unet(
     if backbone_name=='efficientnetb3':
         backbone = efficientnet.EfficientNetB3(input_shape=input_shape)
     if backbone_name=='efficientnetv2-b0':
-        backbone = efficientnet.EfficientNetV2B0(input_shape=input_shape)
+        backbone = efficientnetv2.EfficientNetV2B0(input_shape=input_shape)
     if backbone_name=='efficientnetv2-b1':
-        backbone = efficientnet.EfficientNetV2B1(input_shape=input_shape)
+        backbone = efficientnetv2.EfficientNetV2B1(input_shape=input_shape)
     if backbone_name=='efficientnetv2-b2':
-        backbone = efficientnet.EfficientNetV2B2(input_shape=input_shape)
+        backbone = efficientnetv2.EfficientNetV2B2(input_shape=input_shape)
     if backbone_name=='efficientnetv2-b3':
-        backbone = efficientnet.EfficientNetV2B3(input_shape=input_shape)
+        backbone = efficientnetv2.EfficientNetV2B3(input_shape=input_shape)
     if backbone_name=='efficientnetv2-s':
-        backbone = efficientnet.EfficientNetV2S(input_shape=input_shape, weight=None)
+        backbone = efficientnetv2.EfficientNetV2S(input_shape=input_shape, weight=None)
     if backbone_name=='efficientnetv2-m':
-        backbone = efficientnet.EfficientNetV2M(input_shape=input_shape)
+        backbone = efficientnetv2.EfficientNetV2M(input_shape=input_shape)
     if backbone_name=='efficientnetv2-l':
-        backbone = efficientnet.EfficientNetV2L(input_shape=input_shape)
+        backbone = efficientnetv2.EfficientNetV2L(input_shape=input_shape)
    
     if encoder_features == 'default':
         encoder_features = get_features_name[backbone_name]
