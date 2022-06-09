@@ -198,7 +198,7 @@ def build_unet(
         kernel_initializer='glorot_uniform',
         name='final_conv',
     )(x)
-    x = layers.Activation(activation, name=activation)(x)
+    x = layers.Activation(activation, dtype=tf.float32, name=activation)(x)
 
     # create keras model instance
     model = models.Model(inputs=skips, outputs=[x])
