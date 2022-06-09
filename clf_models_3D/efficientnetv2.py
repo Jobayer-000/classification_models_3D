@@ -611,11 +611,13 @@ def MBConvBlock(
             x = inputs
 
         # Depthwise conv
-        x = DepthwiseConv3D(
+        x = layers.Conv3D(
+            filters = filters,
             kernel_size=kernel_size,
             strides=strides,
             depthwise_initializer=CONV_KERNEL_INITIALIZER,
             padding="same",
+            groups=filters,
             data_format="channels_last",
             use_bias=False,
             name=name + "dwconv2",
