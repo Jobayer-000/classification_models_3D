@@ -611,16 +611,16 @@ def MBConvBlock(
             x = inputs
 
         # Depthwise conv
-        x = layers.Conv3D(
-            filters=filters,
+        x = DepthwiseConv3D(
             kernel_size=kernel_size,
             strides=strides,
-            kernel_initializer=CONV_KERNEL_INITIALIZER,
+            depthwise_initializer=CONV_KERNEL_INITIALIZER,
             padding="same",
             data_format="channels_last",
             use_bias=False,
             name=name + "dwconv2",
         )(x)
+        
         x = layers.BatchNormalization(
             axis=bn_axis, momentum=bn_momentum, name=name + "bn")(x)
         x = layers.Activation(activation, name=name + "activation")(x)
