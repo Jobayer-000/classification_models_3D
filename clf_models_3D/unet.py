@@ -174,8 +174,8 @@ def build_unet(
     backbone_5 = backbone[4]
     backbone_6 = keras.Model([backbone[5].input], [backbone[5].output, backbone[5].get_layer(name=skip_connection_layers[0]).output])
     
-    skips  =[backbone_6.output[1], backbone_4.output[1], backbone_2.output[1], backbone_1.output[1], backbone_6.output[0]]
-    x = skips[-1]
+    skips  =[backbone_6.output[1], backbone_4.output[1], backbone_2.output[1], backbone_1.output[1]]
+    x =  backbone_6.output[0]
     # add center block if previous operation was maxpooling (for vgg models)
     if isinstance(backbone_6.layers[-1], layers.MaxPooling3D):
         x = Conv3x3BnReLU(512, use_batchnorm, name='center_block1')(x)
@@ -206,7 +206,7 @@ def build_unet(
     #x = layers.Activation(activation, name=activation)(x)
 
     # create keras model instance
-    model = models.Model(inputs=skips, outputs=[x])
+    model = models.Model(inputs=[*skips,x], outputs=[x])
 
     return backbone_1,backbone_2,backbone_3,backbone_4,backbone_5,backbone_6,model
 
