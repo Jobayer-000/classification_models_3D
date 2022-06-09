@@ -174,12 +174,7 @@ def build_unet(
     backbone_5 = backbone[4]
     backbone_6 = keras.Model([backbone[5].input], [backbone[5].output, backbone[5].get_layer(name=skip_connection_layers[0]).output])
     
-    skips  =[backbone_6.output[1], backbone_4.output[1], backbone_2.output[1], backbone_1.output[1]]
-    x =  backbone_6.output[0]
-    # add center block if previous operation was maxpooling (for vgg models)
-    if isinstance(backbone_6.layers[-1], layers.MaxPooling3D):
-        x = Conv3x3BnReLU(512, use_batchnorm, name='center_block1')(x)
-        x = Conv3x3BnReLU(512, use_batchnorm, name='center_block2')(x)
+    skips  =[backbone_6.output[1], backbone_4.output[1], backbone_2.output[1], backbone_1.output[1],backbone_6.output[0]]
 
     # building decoder blocks
     for i in range(n_upsample_blocks):
@@ -189,7 +184,7 @@ def build_unet(
         else:
             skip = None
 
-        x = decoder_block(decoder_filters[i], stage=i, use_batchnorm=use_batchnorm)(x, skip)
+        x = decoder_block(decoder_filters[i], stage=i, use_batchnorm=use_batchnorm)(skips[-1] if i==0 else x, skip)
 
     if dropout:
         x = layers.SpatialDropout3D(dropout, name='pyramid_dropout')(x)
