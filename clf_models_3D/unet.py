@@ -201,7 +201,7 @@ def build_unet(
     x = layers.Activation(activation, name=activation)(x)
 
     # create keras model instance
-    model = models.Model(inputs=[*skips,x], outputs=[x])
+    model = models.Model(inputs=skips, outputs=[x])
 
     return backbone_1,backbone_2,backbone_3,backbone_4,backbone_5,backbone_6,model
 
