@@ -3,13 +3,9 @@ import collections
 import tensorflow as tf
 from tensorflow.keras import layers, models
 from tensorflow.keras import utils as keras utils
-form tensorflow.keras import backend
-from ._common_blocks import ChannelSE
+from tensorflow.keras import backend
+from common_blocks import ChannelSE
 
-backend = None
-layers = None
-models = None
-keras_utils = None
 
 ModelParams = collections.namedtuple(
     'ModelParams',
@@ -210,8 +206,6 @@ def ResNet(
             or invalid input shape.
     """
 
-    global backend, layers, models, keras_utils
-    backend, layers, models, keras_utils = get_submodules_from_kwargs(kwargs)
 
     # if stride_size is scalar make it tuple of length 5 with elements tuple of size 3
     # (stride for each dimension for more flexibility)
