@@ -4,7 +4,6 @@ import tensorflow as tf
 from tensorflow.keras import layers, models
 from tensorflow.keras import utils as keras_utils
 from tensorflow.keras import backend
-from common_blocks import ChannelSE
 
 
 ModelParams = collections.namedtuple(
@@ -16,6 +15,37 @@ ModelParams = collections.namedtuple(
 # -------------------------------------------------------------------------
 #   Helpers functions
 # -------------------------------------------------------------------------
+def ChannelSE(reduction=16, **kwargs):
+    """
+    Squeeze and Excitation block, reimplementation inspired by
+        https://github.com/Cadene/pretrained-models.pytorch/blob/master/pretrainedmodels/models/senet.py
+    Args:
+        reduction: channels squeeze factor
+    """
+    channels_axis = 4 if backend.image_data_format() == 'channels_last' else 1
+
+    def layer(input_tensor):
+        # get number of channels/filters
+        channels = backend.int_shape(input_tensor)[channels_axis]
+
+        x = input_tensor
+
+        # squeeze and excitation block in PyTorch style with
+        x = layers.GlobalAveragePooling3D()(x)
+        x = layers.Lambda(expand_dims, arguments={'channels_axis': channels_axis})(x)
+        x = layers.Conv3D(channels // reduction, (1, 1, 1), kernel_initializer='he_uniform')(x)
+        x = layers.Activation('relu')(x)
+        x = layers.Conv3D(channels, (1, 1, 1), kernel_initializer='he_uniform')(x)
+        x = layers.Activation('sigmoid')(x)
+
+        # apply attention
+        x = layers.Multiply()([input_tensor, x])
+
+        return x
+
+    return layer
+
+
 
 def handle_block_names(stage, block):
     name_base = 'stage{}_unit{}_'.format(stage + 1, block + 1)
