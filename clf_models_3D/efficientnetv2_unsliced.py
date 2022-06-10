@@ -24,6 +24,7 @@ import math
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers, models
+from tensorflow.keras import backend
 from clf_models_3D import _DepthwiseConv3D
 DepthwiseConv3D = _DepthwiseConv3D.DepthwiseConv3D
 
@@ -584,7 +585,7 @@ def MBConvBlock(
     name=None,
 ):
     """MBConv block: Mobile Inverted Residual Bottleneck."""
-    bn_axis = -1
+    bn_axis = -1 if backend.image_data_format() == "channels_last" else 1
 
     def apply(inputs):
         # Expansion phase
@@ -695,7 +696,7 @@ def FusedMBConvBlock(
     name=None,
 ):
     """Fused MBConv Block: Fusing the proj conv1x1 and depthwise_conv into a conv2d."""
-    bn_axis = -1 
+    bn_axis = -1 if backend.image_data_format() == "channels_last" else 1
     def apply(inputs):
         filters = input_filters * expand_ratio
         if expand_ratio != 1:
@@ -868,7 +869,7 @@ def EfficientNetV2(
             stride_size[i] = (stride_size[i], stride_size[i], stride_size[i])
 
     img_input = layers.Input(shape=input_shape)
-    bn_axis = -1
+    bn_axis = -1 if backend.image_data_format() == "channels_last" else 1
 
     
     # Build stem
