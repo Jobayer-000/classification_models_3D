@@ -100,7 +100,7 @@ def DecoderUpsamplingX2Block(filters, stage, use_batchnorm=False):
     conv2_name = 'decoder_stage{}b'.format(stage)
     concat_name = 'decoder_stage{}_concat'.format(stage)
 
-    concat_axis = 4
+    concat_axis = 4 if backend.image_data_format() == 'channels_last' else 1
 
     def wrapper(input_tensor, skip=None):
         x = layers.UpSampling3D(size=2, name=up_name)(input_tensor)
@@ -123,7 +123,7 @@ def DecoderTransposeX2Block(filters, stage, use_batchnorm=False):
     conv_block_name = 'decoder_stage{}b'.format(stage)
     concat_name = 'decoder_stage{}_concat'.format(stage)
 
-    concat_axis = bn_axis = 4 
+    concat_axis = bn_axis = 4 if backend.image_data_format() == 'channels_last' else 1
 
     def layer(input_tensor, skip=None):
 
