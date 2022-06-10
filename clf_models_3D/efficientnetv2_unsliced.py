@@ -617,7 +617,6 @@ def MBConvBlock(
             strides=strides,
             kernel_initializer=CONV_KERNEL_INITIALIZER,
             padding="same",
-            groups=filters,
            
             use_bias=False,
             name=name + "dwconv2",
