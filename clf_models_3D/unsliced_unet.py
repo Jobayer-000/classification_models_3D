@@ -168,10 +168,11 @@ def build_unet(
 ):
  
    
-    input_ = backbone[0].input
+    input_ = backbone.input
     
     skips  =[backbone.get_layer(name=skip_connection_layers[0]).output, backbone.get_layer(name=skip_connection_layers[1]).output,
              backbone.get_layer(name=skip_connection_layers[2]).output, backbone.get_layer(name=skip_connection_layers[3]).output]
+    x = backbone.output
     for i in range(n_upsample_blocks):
 
         if i < len(skips):
