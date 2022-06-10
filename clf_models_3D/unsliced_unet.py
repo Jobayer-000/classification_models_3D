@@ -1,4 +1,4 @@
-from clf_models_3D import efficientnetv2, efficientnet
+from clf_models_3D import efficientnetv2_unsliced as efficientnetv2
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers, models
