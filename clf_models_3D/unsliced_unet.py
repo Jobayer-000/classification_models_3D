@@ -225,7 +225,14 @@ get_features_name = {
         'efficientnetv2-m': ('block6a_expand_activation', 'block4a_expand_activation',
                             'block2b_add', 'block1a_project_activation'),
         'efficientnetv2-l': ('block6a_expand_activation', 'block4a_expand_activation',
-                            'block2b_add', 'block1a_project_activation')
+                            'block2b_add', 'block1a_project_activation'),
+        'resnet18': ('stage4_unit1_relu1', 'stage3_unit1_relu1', 'stage2_unit1_relu1', 'relu0'),
+        'resnet34': ('stage4_unit1_relu1', 'stage3_unit1_relu1', 'stage2_unit1_relu1', 'relu0'),
+        'resnet50': ('stage4_unit1_relu1', 'stage3_unit1_relu1', 'stage2_unit1_relu1', 'relu0'),
+        'resnet101': ('stage4_unit1_relu1', 'stage3_unit1_relu1', 'stage2_unit1_relu1', 'relu0'),
+        'resnet152': ('stage4_unit1_relu1', 'stage3_unit1_relu1', 'stage2_unit1_relu1', 'relu0'),
+        'resnext50': ('stage4_unit1_relu1', 'stage3_unit1_relu1', 'stage2_unit1_relu1', 'relu0'),
+        'resnext101': ('stage4_unit1_relu1', 'stage3_unit1_relu1', 'stage2_unit1_relu1', 'relu0')
 }
 def Unet(
         backbone_name='efficientnetv2-s',
