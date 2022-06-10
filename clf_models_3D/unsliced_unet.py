@@ -170,19 +170,11 @@ def build_unet(
    
     input_ = backbone[0].input
     
-    skips  =[backbone[5].get_layer(name=skip_connection_layers[0]).output, backbone[3].get_layer(name=skip_connection_layers[1]).output,
-             backbone[1].get_layer(name=skip_connection_layers[2]).output, backbone[0].get_layer(name=skip_connection_layers[3]).output]
-    x = backbone[0](input_)
-    x = backbone[1](x)
-    x = backbone[2](x)
-    x = backbone[3](x)
-    x = backbone[4](x)
-    x = backbone[5](x)
-    
-    # building decoder blocks
+    skips  =[backbone.get_layer(name=skip_connection_layers[0]).output, backbone.get_layer(name=skip_connection_layers[1]).output,
+             backbone.get_layer(name=skip_connection_layers[2]).output, backbone.get_layer(name=skip_connection_layers[3]).output]
     for i in range(n_upsample_blocks):
 
-        if i < len(skips[:-1]):
+        if i < len(skips):
             skip = skips[i]
         else:
             skip = None
@@ -201,14 +193,12 @@ def build_unet(
         kernel_initializer='glorot_uniform',
         name='final_conv',
     )(x)
-    x = layers.Activation(activation, dtype=tf.float32, name=activation)(x)
+    x = layers.Activation(activation, name=activation)(x)
 
     # create keras model instance
-    model = models.Model(inputs=input_, outputs=x)
+    model = models.Model(input_, x)
 
     return model
-
-
 # ---------------------------------------------------------------------
 #  Unet Model
 # ---------------------------------------------------------------------
