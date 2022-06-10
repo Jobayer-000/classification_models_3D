@@ -279,27 +279,38 @@ def Unet(
                          'Got: {}'.format(decoder_block_type))
     if backbone_name=='efficientnetb0':
         backbone = efficientnet.EfficientNetB0(input_shape=input_shape, weight=None)
-    if backbone_name=='efficientnetb1':
+    elif backbone_name=='efficientnetb1':
         backbone = efficientnet.EfficientNetB1(input_shape=input_shape)
-    if backbone_name=='efficientnetb2':
+    elif backbone_name=='efficientnetb2':
         backbone = efficientnet.EfficientNetB2(input_shape=input_shape)
-    if backbone_name=='efficientnetb3':
+    elif backbone_name=='efficientnetb3':
         backbone = efficientnet.EfficientNetB3(input_shape=input_shape)
-    if backbone_name=='efficientnetv2-b0':
+    elif backbone_name=='efficientnetv2-b0':
         backbone = efficientnetv2.EfficientNetV2B0(input_shape=input_shape)
-    if backbone_name=='efficientnetv2-b1':
+    elif backbone_name=='efficientnetv2-b1':
         backbone = efficientnetv2.EfficientNetV2B1(input_shape=input_shape)
-    if backbone_name=='efficientnetv2-b2':
+    elif backbone_name=='efficientnetv2-b2':
         backbone = efficientnetv2.EfficientNetV2B2(input_shape=input_shape)
-    if backbone_name=='efficientnetv2-b3':
+    elif backbone_name=='efficientnetv2-b3':
         backbone = efficientnetv2.EfficientNetV2B3(input_shape=input_shape)
-    if backbone_name=='efficientnetv2-s':
-        backbone = efficientnetv2.EfficientNetV2S(input_shape=input_shape, weight=None)
-    if backbone_name=='efficientnetv2-m':
+    elif backbone_name=='efficientnetv2-s':
+        backbone = efficientnetv2.EfficientNetV2S(input_shape=input_shape)
+    elif backbone_name=='efficientnetv2-m':
         backbone = efficientnetv2.EfficientNetV2M(input_shape=input_shape)
-    if backbone_name=='efficientnetv2-l':
+    elif backbone_name=='efficientnetv2-l':
         backbone = efficientnetv2.EfficientNetV2L(input_shape=input_shape)
-   
+    elif backbone_name=='resnet50':
+        backbone = resnet.ResNet50(input_shape=input_shape)
+    elif backbone_name=='resnet34':
+        backbone = resnet.ResNet34(input_shape=input_shape)
+    elif backbone_name=='resnet18':
+        backbone = resnet.ResNet18(input_shape=input_shape)
+    elif backbone_name=='seresnet18':
+        backbone = resnet.SEResNet18(input_shape=input_shape)
+    elif backbone_name=='seresnet34':
+        backbone = resnet.SEResNet34(input_shape=input_shape)
+    else:
+        print('MODEL NOT FOUND')
     if encoder_features == 'default':
         encoder_features = get_features_name[backbone_name]
 
