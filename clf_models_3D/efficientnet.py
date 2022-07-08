@@ -459,20 +459,22 @@ def block(
         x = inputs
 
     # Depthwise Convolution
-    if strides == 2:
-        x = layers.ZeroPadding3D(
-            padding=correct_pad_3d(x, kernel_size),
-            name=name + 'dwconv_pad')(x)
-        conv_pad = 'valid'
-    else:
-        conv_pad = 'same'
+    #if strides == 2:
+        #x = layers.ZeroPadding3D(
+            #padding=correct_pad_3d(x, kernel_size),
+            #name=name + 'dwconv_pad')(x)
+        #conv_pad = 'valid'
+    #else:
+        #conv_pad = 'same'
     filter = x.shape[-1]
-    x = DepthwiseConv3D(
-        kernel_size,
-        strides=strides,
-        padding=conv_pad,
-        use_bias=False,
-        depthwise_initializer=CONV_KERNEL_INITIALIZER,
+    x = layers.Conv3D(
+            filters = filters,
+            kernel_size=kernel_size,
+            strides=strides,
+            kernel_initializer=CONV_KERNEL_INITIALIZER,
+            padding="same",
+            groups=filters,
+            use_bias=False,
         name=name + 'dwconv'
     )(x)
     x = layers.BatchNormalization(axis=bn_axis, name=name + 'bn')(x)
