@@ -306,13 +306,22 @@ def Unet(
         backbone = efficientnet.EfficientNetB2(input_shape=input_shape)
     elif backbone_name=='efficientnetb3':
         backbone = efficientnet.EfficientNetB3(input_shape=input_shape)
-    elif backbone_name=='efficientnetv2-b0':
+    elif backbone_name=='efficientnetb4':
+        backbone = efficientnet.EfficientNetB4(input_shape=input_shape)
+    elif backbone_name=='efficientnetb5':
+        backbone = efficientnet.EfficientNetB5(input_shape=input_shape)
+    elif backbone_name=='efficientnetb6':
+        backbone = efficientnet.EfficientNetB6(input_shape=input_shape)
+    elif backbone_name=='efficientnetb7':
+        backbone = efficientnet.EfficientNetB7(input_shape=input_shape)
+        
+    elif backbone_name=='efficientnetv2b0':
         backbone = efficientnetv2.EfficientNetV2B0(input_shape=input_shape)
-    elif backbone_name=='efficientnetv2-b1':
+    elif backbone_name=='efficientnetv2b1':
         backbone = efficientnetv2.EfficientNetV2B1(input_shape=input_shape)
-    elif backbone_name=='efficientnetv2-b2':
+    elif backbone_name=='efficientnetv2b2':
         backbone = efficientnetv2.EfficientNetV2B2(input_shape=input_shape)
-    elif backbone_name=='efficientnetv2-b3':
+    elif backbone_name=='efficientnetv2b3':
         backbone = efficientnetv2.EfficientNetV2B3(input_shape=input_shape)
     elif backbone_name=='efficientnetv2-s':
         backbone = efficientnetv2.EfficientNetV2S(input_shape=input_shape, weight=None)
