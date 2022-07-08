@@ -213,6 +213,14 @@ get_features_name = {
                            'block3a_expand_activation', 'block2a_expand_activation'),
         'efficientnetb3' : ('block6a_expand_activation', 'block4a_expand_activation',
                            'block3a_expand_activation', 'block2a_expand_activation'),
+        'efficientnetb4': ('block6a_expand_activation', 'block4a_expand_activation',
+                           'block3a_expand_activation', 'block2a_expand_activation'),
+        'efficientnetb5': ('block6a_expand_activation', 'block4a_expand_activation',
+                           'block3a_expand_activation', 'block2a_expand_activation'),
+        'efficientnetb6': ('block6a_expand_activation', 'block4a_expand_activation',
+                           'block3a_expand_activation', 'block2a_expand_activation'),
+        'efficientnetb7': ('block6a_expand_activation', 'block4a_expand_activation',
+                           'block3a_expand_activation', 'block2a_expand_activation'),
         'efficientnetv2-b0': ('block6a_expand_activation', 'block4a_expand_activation',
                              'block2b_add', 'block1a_project_activation'),
         'efficientnetv2-b1': ('block6a_expand_activation', 'block4a_expand_activation',
@@ -293,6 +301,14 @@ def Unet(
         backbone = efficientnet.EfficientNetB2(input_shape=input_shape)
     elif backbone_name=='efficientnetb3':
         backbone = efficientnet.EfficientNetB3(input_shape=input_shape)
+    elif backbone_name=='efficientnetb4':
+        backbone = efficientnet.EfficientNetB4(input_shape=input_shape)
+    elif backbone_name=='efficientnetb5':
+        backbone = efficientnet.EfficientNetB5(input_shape=input_shape)
+    elif backbone_name=='efficientnetb6':
+        backbone = efficientnet.EfficientNetB6(input_shape=input_shape)
+    elif backbone_name=='efficientnetb7':
+        backbone = efficientnet.EfficientNetB7(input_shape=input_shape)
     elif backbone_name=='efficientnetv2-b0':
         backbone = efficientnetv2.EfficientNetV2B0(input_shape=input_shape)
     elif backbone_name=='efficientnetv2-b1':
