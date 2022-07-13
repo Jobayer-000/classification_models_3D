@@ -172,7 +172,7 @@ def build_unet(
     backbone_3 = backbone[2]
     backbone_4 = keras.Model([backbone[3].input], [backbone[3].output, backbone[3].get_layer(name=skip_connection_layers[1]).output])
     backbone_5 = backbone[4]
-    backbone_6 = keras.Model([backbone[5].input], [backbone[5].output, backbone[5].get_layer(name=skip_connection_layers[0]).output])
+    backbone_6 = keras.Model([backbone[5].input], [backbone[-1].output, backbone[5].get_layer(name=skip_connection_layers[0]).output])
     
     skips  =[backbone_6.output[1], backbone_4.output[1], backbone_2.output[1], backbone_1.output[1],backbone_6.output[0]]
 
