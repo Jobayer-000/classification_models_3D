@@ -202,8 +202,10 @@ def build_unet(
 
     # create keras model instance
     model = models.Model(inputs=skips, outputs=[x])
-
-    return backbone_1,backbone_2,backbone_3,backbone_4,backbone_5,backbone_6,model
+    if len(backbone)==6:
+      return backbone_1,backbone_2,backbone_3,backbone_4,backbone_5,backbone_6,model 
+    else:
+      return backbone_1,backbone_2,backbone_3,backbone_4,backbone_5,backbone_6, backbone[-1], model
 
 
 # ---------------------------------------------------------------------
